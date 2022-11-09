@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#Task 0: Installs ufw and sets allow for 22, 443, and 80
+#Task 0: Installs ufw firewall
 
 sudo apt-get update -y
 sudo apt install ufw -y
