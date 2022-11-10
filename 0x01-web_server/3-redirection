@@ -8,6 +8,6 @@ sudo apt-get -y update
 sudo apt-get install -y nginx
 sudo rm /var/www/html/*.html
 sudo echo "Hello World" | sudo tee /var/www/html/index.html
-sudo sed -i "[$find][$replace301]" /etc/nginx/sites-available/default
+sudo sed -i "s|$find|$replace301|" /etc/nginx/sites-available/default
 sudo service nginx restart
 sudo service nginx reload
