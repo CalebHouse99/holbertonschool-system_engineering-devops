@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     #employee todo list
     todo = requests.get(
-        "https://jsonplaceholder.typicode.com/users/{}/todo".format(argv[1])
+        "https://jsonplaceholder.typicode.com/users/{}/todos".format(argv[1])
     ).json()
 
     #convert to list obj
