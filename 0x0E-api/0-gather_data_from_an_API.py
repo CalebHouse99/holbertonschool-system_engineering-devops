@@ -6,7 +6,7 @@ from sys import argv
 
 if __name__ == "__main__":
     #employee info
-    emp = requests.get(
+    employee = requests.get(
         "https://jsonplaceholder.typicode.com/users/{}".format(argv[1])
     ).json()
 
@@ -23,6 +23,6 @@ if __name__ == "__main__":
     #format and print
     print(
         "Employee {} is done with tasks({}/{}):".format(
-            emp.get("name"), len(todo_list), len(todos)
+            employee.get("name"), len(todo_list), len(todos)
         ), *todo_list, sep="\n\t "
     )
