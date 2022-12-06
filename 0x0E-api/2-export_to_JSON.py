@@ -2,36 +2,33 @@
 """Export in JSON format"""
 import json
 import requests
-from sys import argv
+import sys
 
 
-if __name__ == '__main__':
-    user_id = argv[1]
+def employee_todo_to_JSON():
+    """export to JSON"""
+    employee_id = sys.argv[1]
+    url = "https://jsonplaceholder.typicode.com/"
 
-    todo_response = requests.get('https://jsonplaceholder.typicode.com/todos/\
-?userId={}'.format(user_id))
+    username = requests.get(url + 'users/{}'.format(employee_id))
+    employee_todo = requests.get(url + 'todos?userId={}'.format(employee_id))
 
-    user_response = requests.get('https://jsonplaceholder.typicode.com/users/\
-{}'.format(user_id))
+    username = username.json()
+    employee_todo = employee_todo.json()
 
-    todo_data = todo_response.text
-    parse_todo = json.loads(todo_data)
+    employee_tasks = []
 
-    user_data = user_response.text
-    parse_user = json.loads(user_data)
+    for task in employee_todo:
+        task_dict = {}
+        task_dict['task'] = task.get('title')
+        task_dict['completed'] = task.get('completed')
+        task_dict['username'] = username.get('username')
+        employee_tasks.append(task_dict)
+    json_dict = {}
+    json_dict[employee_id] = employee_tasks
+    with open('{}.json'.format(employee_id), 'w') as JSONFile:
+        json.dump(json_dict, JSONFile)
 
-    user_name = parse_user['name']
-    completed_tasks = 0
-    total_tasks = 0
 
-    for task in parse_todo:
-        total_tasks += 1
-        if task['completed']:
-            completed_tasks += 1
-
-    print("Employee {} is done with tasks({}/{}):\
-    ".format(user_name, completed_tasks, total_tasks))
-
-    for task in parse_todo:
-        if task['completed']:
-            print("\t {}\n".format(task['title']), end="")
+if __name__ == "__main__":
+    employee_todo_to_JSON()
